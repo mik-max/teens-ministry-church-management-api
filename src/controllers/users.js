@@ -5,7 +5,6 @@ import { encrypt } from "../utilities/hashing.js";
 import { validateEmail } from "../utilities/emailValidattion.js";
 import  Jwt  from "jsonwebtoken";
 export const createUser = async (req, res) => {
-    
     try {
           if(req.body.email && req.body.firstName && req.body.lastName && req.body.gender && req.body.role){
                let validatedEmail = validateEmail(req.body.email);
@@ -33,7 +32,7 @@ export const loginUser = async (req, res) => {
     let hashedPassword = encrypt(req.body.password);
     if (validatedEmail) {
       const data = await loginUserData(req.body.email, hashedPassword);
-        if (data[0] == undefined) {
+        if (data[0] === undefined) {
             res.status(400).send({status: "failed", data: null, message: "email or password is incorect"});
         } else {
             const token = Jwt.sign(
@@ -60,7 +59,6 @@ export const loginUser = async (req, res) => {
     }
   } catch (error) {
         res.status(500).send({ status: "Failed", data: null, message: error.message });
-        console.log(error.message);
     } 
 };
 
